@@ -35,48 +35,189 @@ func (s *Server) getDataRepositoryRoutes() []Route {
 			Index,
 		},
 
+		// Resource: 5GVnGroups(TS 29.505 5.2.34), Individual5GVnGroup(TS 29.505 5.2.35)
 		{
-			"AmfContext3gpp",
-			strings.ToUpper("Patch"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-3gpp-access",
-			s.HandleAmfContext3gpp,
+			Name:        "Create5GVnGroup",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/:externalGroupId",
+			HandlerFunc: s.HTTPCreate5GVnGroup,
 		},
 
 		{
-			"CreateAmfContext3gpp",
-			strings.ToUpper("Put"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-3gpp-access",
-			s.HandleCreateAmfContext3gpp,
+			Name:        "Modify5GVnGroup",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/:externalGroupId",
+			HandlerFunc: s.HTTPModify5GVnGroup,
 		},
 
 		{
-			"QueryAmfContext3gpp",
-			strings.ToUpper("Get"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-3gpp-access",
-			s.HandleQueryAmfContext3gpp,
+			Name:        "Delete5GVnGroup",
+			Method:      strings.ToUpper("Delete"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/:externalGroupId",
+			HandlerFunc: s.HTTPDelete5GVnGroup,
 		},
 
 		{
-			"AmfContextNon3gpp",
-			strings.ToUpper("Patch"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-non-3gpp-access",
-			s.HandleAmfContextNon3gpp,
+			Name:        "Get5GVnGroupConfiguration",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/:externalGroupId",
+			HandlerFunc: s.HTTPGet5GVnGroupConfiguration,
 		},
 
 		{
-			"CreateAmfContextNon3gpp",
-			strings.ToUpper("Put"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-non-3gpp-access",
-			s.HandleCreateAmfContextNon3gpp,
+			Name:        "Query5GVnGroupInternal",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/internal",
+			HandlerFunc: s.HTTPQuery5GVnGroupInternal,
 		},
 
 		{
-			"QueryAmfContextNon3gpp",
-			strings.ToUpper("Get"),
-			"/subscription-data/:ueId/:servingPlmnId/amf-non-3gpp-access",
-			s.HandleQueryAmfContextNon3gpp,
+			Name:        "Query5GVNGroupPPData",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/5g-vn-groups/pp-profile-data",
+			HandlerFunc: s.HTTPQuery5GVNGroupPPData,
 		},
 
+		// Resource: GroupIdentifiers(TS 29.505 5.2.33)
+		{
+			Name:        "GetGroupIdentifiers",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/group-identifiers",
+			HandlerFunc: s.HTTPGetGroupIdentifiers,
+		},
+
+		//Resource: EeGroupSubscriptions (TS 29.505 5.2.29)
+		{
+			Name:        "CreateEeGroupSubscriptions",
+			Method:      strings.ToUpper("Post"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions",
+			HandlerFunc: s.HTTPCreateEeGroupSubscriptions,
+		},
+
+		{
+			Name:        "QueryEeGroupSubscriptions",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions",
+			HandlerFunc: s.HTTPQueryEeGroupSubscriptions,
+		},
+		//Resource: IndividualEeGroupSubscription(TS 29.505 5.2.19A)
+
+		{
+			Name:        "ModifyEeGroupSubscription",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
+			HandlerFunc: s.HTTPModifyEeGroupSubscription,
+		},
+
+		{
+			Name:        "QueryEeGroupSubscription",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
+			HandlerFunc: s.HTTPQueryEeGroupSubscription,
+		},
+
+		{
+			Name:        "UpdateEeGroupSubscriptions",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
+			HandlerFunc: s.HTTPUpdateEeGroupSubscriptions,
+		},
+
+		{
+			Name:        "RemoveEeGroupSubscriptions",
+			Method:      strings.ToUpper("Delete"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
+			HandlerFunc: s.HTTPRemoveEeGroupSubscriptions,
+		},
+
+		// Resource: EeGroupProfileData(TS 29.505 5.2.19B )
+		{
+			Name:        "QueryGroupEEData",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-profile-data",
+			HandlerFunc: s.HTTPQueryGroupEEData,
+		},
+
+		
+		
+
+		// Resource: 5MBSSubscriptionData
+		{
+			Name:        "Create5GmbsGroup",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/group-data/mbs-group-membership/:externalGroupId",
+			HandlerFunc: s.HTTPCreate5GmbsGroup,
+		},
+
+		{
+			Name:        "Delete5GmbsGroup",
+			Method:      strings.ToUpper("Delete"),
+			Pattern:     "/subscription-data/group-data/mbs-group-membership/:externalGroupId",
+			HandlerFunc: s.HTTPDelete5GmbsGroup,
+		},
+
+		{
+			Name:        "GetMulticastMbsGroupMemb",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/mbs-group-membership/:externalGroupId",
+			HandlerFunc: s.HTTPGetMulticastMbsGroupMemb,
+		},
+
+		{
+			Name:        "Modify5GmbsGroup",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/group-data/mbs-group-membership/:externalGroupId",
+			HandlerFunc: s.HTTPModify5GmbsGroup,
+		},
+
+		// Resource: Amf3GppAccessRegistration
+		{
+			Name:        "QueryAmfContext3gpp",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-3gpp-access",
+			HandlerFunc: s.HTTPQueryAmfContext3gpp,
+		},
+		
+		{
+			Name:        "CreateAmfContext3gpp",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-3gpp-access",
+			HandlerFunc: s.HTTPCreateAmfContext3gpp,
+		},
+		
+		{
+			Name:        "AmfContext3gpp",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-3gpp-access",
+			HandlerFunc: s.HTTPAmfContext3gpp,
+		},
+
+
+
+		// Resource: AmfNon3GppAccessRegistration--
+		{
+			Name:        "AmfContextNon3gpp",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-non-3gpp-access",
+			HandlerFunc: s.HTTPAmfContextNon3gpp,
+		},
+
+		{
+			Name:        "CreateAmfContextNon3gpp",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-non-3gpp-access",
+			HandlerFunc: s.HTTPCreateAmfContextNon3gpp,
+		},
+
+		{
+			Name:        "QueryAmfContextNon3gpp",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/:ueId/context-data/amf-non-3gpp-access",
+			HandlerFunc: s.HTTPQueryAmfContextNon3gpp,
+		},
+		
+
+		//
 		{
 			"QueryAmData",
 			strings.ToUpper("Get"),
@@ -479,13 +620,37 @@ func (s *Server) getDataRepositoryRoutes() []Route {
 			s.HandleQueryTraceData,
 		},
 
+		// Resource: AmfSubscriptionInfo 
 		{
-			"CreateAMFSubscriptions",
-			strings.ToUpper("Put"),
-			"/subscription-data/:ueId/:servingPlmnId/ee-subscriptions/:subsId/amf-subscriptions",
-			s.HandleCreateAMFSubscriptions,
+			Name:        "CreateAMFSubscriptions",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPCreateAMFSubscriptions,
 		},
 
+		{
+			Name:        "GetAmfSubscriptionInfo",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPGetAmfSubscriptionInfo,
+		},
+
+		{
+			Name:        "ModifyAmfSubscriptionInfo",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPModifyAmfSubscriptionInfo,
+		},
+
+		{
+			Name:        "RemoveAmfSubscriptionsInfo",
+			Method:      strings.ToUpper("Delete"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPRemoveAmfSubscriptionsInfo,
+		},
+	
+
+		//----------------------------------------------------------------------
 		{
 			"ModifyAmfSubscriptionInfo",
 			strings.ToUpper("Patch"),
@@ -581,32 +746,20 @@ func (s *Server) getDataRepositoryRoutes() []Route {
 		},
 
 		/* eeShortRoutes */
+		
+
 		{
-			"CreateEeGroupSubscriptions",
-			strings.ToUpper("Post"),
-			"/subscription-data/group-data/:ueGroupId/ee-subscriptions",
-			s.HandleCreateEeGroupSubscriptions,
+			Name:        "CreateEeSubscriptions",
+			Method:      strings.ToUpper("Post"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions",
+			HandlerFunc: s.HTTPCreateEeSubscriptions,
 		},
 
 		{
-			"QueryEeGroupSubscriptions",
-			strings.ToUpper("Get"),
-			"/subscription-data/group-data/:ueGroupId/ee-subscriptions",
-			s.HandleQueryEeGroupSubscriptions,
-		},
-
-		{
-			"CreateEeSubscriptions",
-			strings.ToUpper("Post"),
-			"/subscription-data/:ueId/context-data/ee-subscriptions",
-			s.HandleCreateEeSubscriptions,
-		},
-
-		{
-			"Queryeesubscriptions",
-			strings.ToUpper("Get"),
-			"/subscription-data/:ueId/context-data/ee-subscriptions",
-			s.HandleQueryeesubscriptions,
+			Name:        "Queryeesubscriptions",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/:ueId/context-data/ee-subscriptions",
+			HandlerFunc: s.HTTPQueryeesubscriptions,
 		},
 
 		/* eeRoutes */
@@ -624,18 +777,35 @@ func (s *Server) getDataRepositoryRoutes() []Route {
 			s.HandleUpdateEesubscriptions,
 		},
 
+		
+
+
 		{
-			"UpdateEeGroupSubscriptions",
-			strings.ToUpper("Put"),
-			"/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
-			s.HandleUpdateEeGroupSubscriptions,
+			Name:        "CreateAmfGroupSubscriptions",
+			Method:      strings.ToUpper("Put"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPCreateAmfGroupSubscriptions,
 		},
 
 		{
-			"RemoveEeGroupSubscriptions",
-			strings.ToUpper("Delete"),
-			"/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId",
-			s.HandleRemoveEeGroupSubscriptions,
+			Name:        "GetAmfGroupSubscriptions",
+			Method:      strings.ToUpper("Get"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPGetAmfGroupSubscriptions,
+		},
+
+		{
+			Name:        "ModifyAmfGroupSubscriptions",
+			Method:      strings.ToUpper("Patch"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPModifyAmfGroupSubscriptions,
+		},
+
+		{
+			Name:        "RemoveAmfGroupSubscriptions",
+			Method:      strings.ToUpper("Delete"),
+			Pattern:     "/subscription-data/group-data/:ueGroupId/ee-subscriptions/:subsId/amf-subscriptions",
+			HandlerFunc: s.HTTPRemoveAmfGroupSubscriptions,
 		},
 
 		/* expoRoutes */
@@ -753,7 +923,7 @@ func Index(c *gin.Context) {
 }
 
 // HTTPAmfContext3gpp - To modify the AMF context data of a UE using 3gpp access in the UDR
-func (s *Server) HandleAmfContext3gpp(c *gin.Context) {
+func (s *Server) HTTPAmfContext3gpp(c *gin.Context) {
 	var patchItemArray []models.PatchItem
 
 	requestBody, err := c.GetRawData()
@@ -793,8 +963,68 @@ func (s *Server) HandleAmfContext3gpp(c *gin.Context) {
 	s.Processor().AmfContext3gppProcedure(c, collName, ueId, patchItemArray)
 }
 
+// HTTPCreate5GVnGroup - Create an individual 5G VN Grouop
+func (s *Server) HTTPCreate5GVnGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPModify5GVnGroup - modify the 5GVnGroup
+func (s *Server) HTTPModify5GVnGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPDelete5GVnGroup - Delete an individual 5G VN Grouop
+func (s *Server) HTTPDelete5GVnGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPCreate5GmbsGroup - Create an individual 5G MBS Grouop
+func (s *Server) HTTPCreate5GmbsGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPDelete5GmbsGroup - Deletes the 5GmbsGroup
+func (s *Server) HTTPDelete5GmbsGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPGetMulticastMbsGroupMemb - Retrieve a 5GmbsGroup
+func (s *Server) HTTPGetMulticastMbsGroupMemb(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPModify5GmbsGroup - Modify the 5GmbsGroup
+func (s *Server) HTTPModify5GmbsGroup(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPGet5GVnGroupConfiguration - Retrieve a 5GVnGroup configuration
+func (s *Server) HTTPGet5GVnGroupConfiguration(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPQuery5GVnGroupInternal - Retrieves the data of 5G VN Group
+func (s *Server) HTTPQuery5GVnGroupInternal(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+//HTTPQuery5GVNGroupPPData - Retrieves the parameter provision profile data for 5G VN Group
+func (s *Server) HTTPQuery5GVNGroupPPData(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPGetGroupIdentifiers - Mapping of Group Identifiers
+func (s *Server) HTTPGetGroupIdentifiers(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPQueryGroupEEData - Retrieves the ee profile data profile data of a group or anyUE
+func (s *Server) HTTPQueryGroupEEData(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
 // HTTPCreateAmfContext3gpp - To store the AMF context data of a UE using 3gpp access in the UDR
-func (s *Server) HandleCreateAmfContext3gpp(c *gin.Context) {
+func (s *Server) HTTPCreateAmfContext3gpp(c *gin.Context) {
 	var amf3GppAccessRegistration models.Amf3GppAccessRegistration
 
 	requestBody, err := c.GetRawData()
@@ -835,7 +1065,7 @@ func (s *Server) HandleCreateAmfContext3gpp(c *gin.Context) {
 }
 
 // HTTPQueryAmfContext3gpp - Retrieves the AMF context data of a UE using 3gpp access
-func (s *Server) HandleQueryAmfContext3gpp(c *gin.Context) {
+func (s *Server) HTTPQueryAmfContext3gpp(c *gin.Context) {
 	logger.DataRepoLog.Tracef("Handle QueryAmfContext3gpp")
 
 	ueId := c.Params.ByName("ueId")
@@ -855,7 +1085,7 @@ func (s *Server) HandleQueryAmfContext3gpp(c *gin.Context) {
 }
 
 // HTTPAmfContextNon3gpp - To modify the AMF context data of a UE using non 3gpp access in the UDR
-func (s *Server) HandleAmfContextNon3gpp(c *gin.Context) {
+func (s *Server) HTTPAmfContextNon3gpp(c *gin.Context) {
 	var patchItemArray []models.PatchItem
 
 	requestBody, err := c.GetRawData()
@@ -897,7 +1127,7 @@ func (s *Server) HandleAmfContextNon3gpp(c *gin.Context) {
 }
 
 // HTTPCreateAmfContextNon3gpp - To store the AMF context data of a UE using non-3gpp access in the UDR
-func (s *Server) HandleCreateAmfContextNon3gpp(c *gin.Context) {
+func (s *Server) HTTPCreateAmfContextNon3gpp(c *gin.Context) {
 	var amfNon3GppAccessRegistration models.AmfNon3GppAccessRegistration
 
 	requestBody, err := c.GetRawData()
@@ -938,7 +1168,7 @@ func (s *Server) HandleCreateAmfContextNon3gpp(c *gin.Context) {
 }
 
 // HTTPQueryAmfContextNon3gpp - Retrieves the AMF context data of a UE using non-3gpp access
-func (s *Server) HandleQueryAmfContextNon3gpp(c *gin.Context) {
+func (s *Server) HTTPQueryAmfContextNon3gpp(c *gin.Context) {
 	logger.DataRepoLog.Tracef("Handle QueryAmfContextNon3gpp")
 
 	collName := "subscriptionData.contextData.amfNon3gppAccess"
@@ -949,6 +1179,29 @@ func (s *Server) HandleQueryAmfContextNon3gpp(c *gin.Context) {
 	}
 	s.Processor().QueryAmfContextNon3gppProcedure(c, collName, ueId)
 }
+
+// HTTPCreateAmfGroupSubscriptions - Create AmfSubscriptions for a group of UEs or any UE
+func (s *Server) HTTPCreateAmfGroupSubscriptions(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPGetAmfGroupSubscriptions - Retrieve AMF subscription Info for a group of UEs or any UE
+func (s *Server) HTTPGetAmfGroupSubscriptions(c *gin.Context) {	
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPModifyAmfGroupSubscriptions - modify the AMF Subscription Info
+func (s *Server) HTTPModifyAmfGroupSubscriptions(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPRemoveAmfGroupSubscriptions - Deletes AMF Subscription Info for an eeSubscription for a group of UEs or any UE
+func (s *Server) HTTPRemoveAmfGroupSubscriptions(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+
+
 
 // HTTPQueryAmData - Retrieves the access and mobility subscription data of a UE
 func (s *Server) HandleQueryAmData(c *gin.Context) {
@@ -2081,8 +2334,8 @@ func (s *Server) HandleQueryTraceData(c *gin.Context) {
 	s.Processor().QueryTraceDataProcedure(c, collName, ueId, servingPlmnId)
 }
 
-// HTTPCreateAMFSubscriptions - Creates AMF Subscription Info for an eeSubscription
-func (s *Server) HandleCreateAMFSubscriptions(c *gin.Context) {
+// HTTPCreateAMFSubscriptions - Create AmfSubscriptions for an individual ee subscriptions of a UE
+func (s *Server) HTTPCreateAMFSubscriptions(c *gin.Context) {
 	var amfSubscriptionInfoArray []models.AmfSubscriptionInfo
 
 	requestBody, err := c.GetRawData()
@@ -2121,6 +2374,21 @@ func (s *Server) HandleCreateAMFSubscriptions(c *gin.Context) {
 	subsId := c.Params.ByName("subsId")
 
 	s.Processor().CreateAMFSubscriptionsProcedure(c, subsId, ueId, amfSubscriptionInfoArray)
+}
+
+// HTTPGetAmfSubscriptionsInfo - Retrieve AMF subscription Info
+func (s *Server) HTTPGetAmfSubscriptionInfo(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPGetAmfSubscriptionsInfo - Modify the AMF Subscription Info
+func (s *Server) HTTPModifyAmfSubscriptionInfo(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+// HTTPRemoveAmfSubscriptionsInfo - Deletes AMF Subscription Info for an eeSubscription
+func (s *Server) HTTPRemoveAmfSubscriptionsInfo(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
 }
 
 // HTTPRemoveAmfSubscriptionsInfo - Deletes AMF Subscription Info for an eeSubscription
@@ -2402,7 +2670,7 @@ func (s *Server) HandleGetOdbData(c *gin.Context) {
 }
 
 // HTTPCreateEeGroupSubscriptions - Create individual EE subscription for a group of UEs or any UE
-func (s *Server) HandleCreateEeGroupSubscriptions(c *gin.Context) {
+func (s *Server) HTTPCreateEeGroupSubscriptions(c *gin.Context) {
 	var eeSubscription models.EeSubscription
 	requestBody, err := c.GetRawData()
 	if err != nil {
@@ -2454,7 +2722,7 @@ func (s *Server) HandleCreateEeGroupSubscriptions(c *gin.Context) {
 }
 
 // HTTPQueryEeGroupSubscriptions - Retrieves the ee subscriptions of a group of UEs or any UE
-func (s *Server) HandleQueryEeGroupSubscriptions(c *gin.Context) {
+func (s *Server) HTTPQueryEeGroupSubscriptions(c *gin.Context) {
 	logger.DataRepoLog.Tracef("Handle QueryEeGroupSubscriptions")
 
 	// pattern: '^(extgroupid-[^@]+@[^@]+|anyUE)$' -- 3GPP 29.505 5.2.29.2
@@ -2479,7 +2747,7 @@ func (s *Server) HandleQueryEeGroupSubscriptions(c *gin.Context) {
 }
 
 // HTTPCreateEeSubscriptions - Create individual EE subscription
-func (s *Server) HandleCreateEeSubscriptions(c *gin.Context) {
+func (s *Server) HTTPCreateEeSubscriptions(c *gin.Context) {
 	var eeSubscription models.EeSubscription
 
 	requestBody, err := c.GetRawData()
@@ -2538,7 +2806,7 @@ func (s *Server) HandleCreateEeSubscriptions(c *gin.Context) {
 }
 
 // HTTPQueryeesubscriptions - Retrieves the ee subscriptions of a UE
-func (s *Server) HandleQueryeesubscriptions(c *gin.Context) {
+func (s *Server) HTTPQueryeesubscriptions(c *gin.Context) {
 	logger.DataRepoLog.Tracef("Handle Queryeesubscriptions")
 
 	// String represents the SUPI or GPSI.
@@ -2624,8 +2892,17 @@ func (s *Server) HandleUpdateEesubscriptions(c *gin.Context) {
 	s.Processor().UpdateEesubscriptionsProcedure(c, ueId, subsId, eeSubscription)
 }
 
+// HTTPQueryEeGroupSubscription
+func (s *Server) HTTPQueryEeGroupSubscription(c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
+func (s *Server) HTTPModifyEeGroupSubscription (c *gin.Context) {
+	c.Status(http.StatusNotImplemented)
+}
+
 // HTTPRemoveEeGroupSubscriptions - Deletes a eeSubscription for a group of UEs or any UE
-func (s *Server) HandleRemoveEeGroupSubscriptions(c *gin.Context) {
+func (s *Server) HTTPRemoveEeGroupSubscriptions(c *gin.Context) {
 	logger.DataRepoLog.Tracef("Handle RemoveEeGroupSubscriptions")
 
 	ueGroupId := c.Params.ByName("ueGroupId")
@@ -2635,7 +2912,7 @@ func (s *Server) HandleRemoveEeGroupSubscriptions(c *gin.Context) {
 }
 
 // HTTPUpdateEeGroupSubscriptions - Stores an individual ee subscription of a group of UEs or any UE
-func (s *Server) HandleUpdateEeGroupSubscriptions(c *gin.Context) {
+func (s *Server) HTTPUpdateEeGroupSubscriptions(c *gin.Context) {
 	var eeSubscription models.EeSubscription
 
 	requestBody, err := c.GetRawData()
